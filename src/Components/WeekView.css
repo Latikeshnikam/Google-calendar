@@ -1,0 +1,30 @@
+
+.flexrow {
+  border-right: 1.5px solid #EBEDEF;
+}
+
+.dayrow {
+  color: #70757a;
+  font-size: 0.6rem;
+  margin-top: 80%;
+}
+
+.column-two {
+  border-top: 1.5px solid #EBEDEF;
+  height: 50px;
+  border-right: 1.5px solid #EBEDEF;
+}
+
+.rowone {
+  font-size: 0.4rem;
+  margin-left: -10px;
+  margin-top: 200%;
+}
+
+.row-one-info {
+  font-size: 20px;
+  color: #808B96;
+  margin-left: 50px;
+  border-right:  1.5px solid #EBEDEF;
+  width: 20px;
+}

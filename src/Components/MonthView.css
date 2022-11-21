@@ -1,0 +1,26 @@
+
+.first-row {
+  /* border: 1px solid #EBEDEF; */
+  border: 1px solid #EBEDEF;;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #808B96;
+  font-weight: 500;
+  height: 7rem;
+  width: 40px;
+  padding-top: 30px;
+}
+
+.other-row {
+  border: 1px solid #EBEDEF;;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #808B96;
+  font-weight: 500;
+  height: 6rem;
+  margin-top: -17px;
+  width: 40px;
+  padding-top: 30px;
+}
