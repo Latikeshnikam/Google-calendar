@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Navbar, Button, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight, Search, QuestionCircle, Gear, Grid3x3GapFill } from "react-bootstrap-icons";
 import MainMenu from "./MainMenu";
+import DatePicker from "react-datepicker";
+import './Header.css';
 
 const todayBtnStyle = {
   border: '2px solid #F1F1F1',
@@ -57,11 +59,29 @@ const filters = (handleRecord, calendarView) => {
 
 const Header = () => {
 
-  const [calendarView, setCalendarView] = useState('Week')
+  const [calendarView, setCalendarView] = useState('Week');
+  const [startDate, setStartDate] = useState(new Date());
 
   const handleRecord = (dayView) => {
     setCalendarView(dayView)
   }
+
+  const getPreviousDate = () => {
+    const previous = startDate;
+    previous.setDate(startDate.getDate() - 1);
+    return previous
+  }
+
+  const getNextDate = () => {
+    const next = startDate;
+    next.setDate(next.getDate() - 1);
+    return next
+  }
+
+  const handleTodayDate = () => {
+    return new Date()
+  }
+
 
   return (
     <>
@@ -70,17 +90,21 @@ const Header = () => {
           <img src={require('./calendar.png')} alt="calendar-icon" width="100px"/>
           <Navbar.Brand href="#">Calendar</Navbar.Brand>
           <Nav className="me-auto">
-            <Button variant="light" style={todayBtnStyle} >Today</Button>
-            <Button variant="light" style={arrowBtnStyle}>
+            <Button variant="light" style={todayBtnStyle} onClick={() => setStartDate(handleTodayDate)} >Today</Button>
+            <Button variant="light" style={arrowBtnStyle} onClick={() => setStartDate(getPreviousDate)}>
               <ChevronLeft size={15} />
             </Button>
-            <Button variant="light" style={arrowBtnStyle}>
+            <Button variant="light" style={arrowBtnStyle} onClick={() => setStartDate(getNextDate)}>
               <ChevronRight size={15} />
             </Button>
-            <Button variant="light">
-              <p>
-              </p>
-            </Button>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date)
+              }}
+              placeholderText={startDate}
+              dateFormat="MMMM d, yyyy"
+            />
           </Nav>
           <Nav className="justify-content-end">
             {infoIcons()}
