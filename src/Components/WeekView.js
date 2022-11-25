@@ -4,13 +4,13 @@ import { WeeksAbbr } from './constants';
 import "./WeekView.css";
 import moment from "moment";
 
-const WeekView  = ({currentDate}) => {
+const WeekView  = ({currentDate, prevClick, nextClick}) => {
   const [weekDays, setWeekDays] = useState(null)
 
   useEffect(() => {
-    var currentDate = moment();
-    var weekStart = currentDate.clone().startOf('week');
-    var weekEnd = currentDate.clone().endOf('week');
+    let current = moment(currentDate);
+    var weekStart = current.clone().startOf('week');
+    var weekEnd = current.clone().endOf('week');
 
     var days = [];
     for (let i = 0; i <= 6; i++) {
@@ -20,7 +20,7 @@ const WeekView  = ({currentDate}) => {
       })
     };
     setWeekDays(days)
-  },[])
+  },[currentDate, prevClick, nextClick])
 
   return (
     <>
@@ -28,8 +28,8 @@ const WeekView  = ({currentDate}) => {
       <div className="flexrow p-2">
         <label className="rowone">GMT+05:30</label>
       </div>
-      {weekDays?.map((week) => (
-        <div className="row-one-info p-2 flex-grow-1">{week.weekday.toUpperCase()} <br/> {week.date}</div>
+      {weekDays?.map((week, index) => (
+        <div key={index} className="row-one-info p-2 flex-grow-1">{week.weekday.toUpperCase()} <br/> {week.date}</div>
       ))}
     </Container>
     <Container className="d-flex" fluid >

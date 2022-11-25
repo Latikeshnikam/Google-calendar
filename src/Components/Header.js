@@ -61,6 +61,8 @@ const Header = () => {
 
   const [calendarView, setCalendarView] = useState('Week');
   const [startDate, setStartDate] = useState(new Date());
+  const [prevClick, setPrevClick] = useState(false)
+  const [nextClick, setNextClick] = useState(false)
 
   const handleRecord = (dayView) => {
     setCalendarView(dayView)
@@ -74,7 +76,7 @@ const Header = () => {
 
   const getNextDate = () => {
     const next = startDate;
-    next.setDate(next.getDate() - 1);
+    next.setDate(next.getDate() + 1);
     return next
   }
 
@@ -82,6 +84,13 @@ const Header = () => {
     return new Date()
   }
 
+  useEffect(() => {
+    getPreviousDate()
+  },[prevClick])
+
+  useEffect(() => {
+    getNextDate()
+  },[nextClick])
 
   return (
     <>
@@ -91,10 +100,10 @@ const Header = () => {
           <Navbar.Brand href="#">Calendar</Navbar.Brand>
           <Nav className="me-auto">
             <Button variant="light" style={todayBtnStyle} onClick={() => setStartDate(handleTodayDate)} >Today</Button>
-            <Button variant="light" style={arrowBtnStyle} onClick={() => setStartDate(getPreviousDate)}>
+            <Button variant="light" style={arrowBtnStyle} onClick={() => setPrevClick(!prevClick)}>
               <ChevronLeft size={15} />
             </Button>
-            <Button variant="light" style={arrowBtnStyle} onClick={() => setStartDate(getNextDate)}>
+            <Button variant="light" style={arrowBtnStyle} onClick={() => setNextClick(!nextClick)}>
               <ChevronRight size={15} />
             </Button>
             <DatePicker
@@ -117,7 +126,9 @@ const Header = () => {
     <Container fluid>
       <MainMenu
         calendarView={calendarView}
-        currentDate={new Date()}
+        currentDate={startDate}
+        prevClick={prevClick}
+        nextClick={nextClick}
       />
     </Container>
     </>

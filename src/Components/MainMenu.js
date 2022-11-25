@@ -10,7 +10,7 @@ import TaskModal from './TaskModal';
 import AppointmentSlots from './AppointmentSlotsModal';
 import CalendarView from "./CalendarView";
 
-const MainMenu = ({ calendarView, currentDate }) => {
+const MainMenu = ({ calendarView, currentDate, prevClick, nextClick }) => {
 
   const [showEventModal, setEventModal ] = useState(false)
   const [showOutOffcModal, setOutOffcModal ] = useState(false)
@@ -52,7 +52,9 @@ const MainMenu = ({ calendarView, currentDate }) => {
       )}
       {calendarView === 'Week' && (
         <WeekView
-          currentDate={new Date()}
+          currentDate={currentDate}
+          prevClick={prevClick}
+          nextClick={nextClick}
         />
       )}
       {calendarView === 'Day' && (
