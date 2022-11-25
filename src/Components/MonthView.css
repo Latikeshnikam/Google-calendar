@@ -8,8 +8,9 @@
   color: #808B96;
   font-weight: 500;
   height: 7rem;
-  width: 40px;
+  width: calc(100% * (1/7) - 10px - 1px);
   padding-top: 30px;
+  margin-bottom: -15px;
 }
 
 .other-row {

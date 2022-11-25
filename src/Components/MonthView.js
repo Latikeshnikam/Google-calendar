@@ -6,6 +6,8 @@ import "./MonthView.css"
 const MonthView = ({currentDate}) => {
 
   const [monthDays, setMonthDays] = useState(null);
+  const [previousMonth, setPreviousMonth] = useState(null);
+  const [nextMonth, setNextMonth] = useState(null);
 
   const getDaysArrayByMonth = (YearMonth) => {
     let daysInMonth = moment(YearMonth).daysInMonth();
@@ -16,65 +18,80 @@ const MonthView = ({currentDate}) => {
       let current = moment(YearMonth).date(daysInMonth);
       arrDays.push({
         day: current.format("D"),
-        week: current.format("ddd")
+        week: current.format("ddd").toUpperCase()
       });
       daysInMonth--;
     }
-    setMonthDays(arrDays)
+    setMonthDays(arrDays.reverse())
+  }
+
+  const handleLastMonthDays = (arr, weekNumber) => {
+    return arr.slice(0,weekNumber).reverse();
+  }
+
+  const handleNextMonthDays = (arr, weekNumber) => {
+    let remainingDays = 7 - weekNumber;
+    return arr.reverse().slice(0,remainingDays-1)
+  }
+
+  const getDaysArrayOfPreviousMonth = (YearMonth) => {
+    let previousYearMonth = moment(YearMonth).subtract(1,'months').format('YYYY-M');
+    let daysInMonth = moment(previousYearMonth).daysInMonth();
+    let previousArr = [];
+    while(daysInMonth) {
+      let current = moment(previousYearMonth).date(daysInMonth);
+      previousArr.push({
+        day: current.format("D"),
+        week: current.format("ddd").toUpperCase()
+      });
+      daysInMonth--;
+    }
+    setPreviousMonth(handleLastMonthDays(previousArr, moment().startOf('month').format('E')))
+  }
+
+  const getDaysArrayOfNextMonth = (YearMonth) => {
+    let nextYearMonth = moment(YearMonth).add(1,'months').format('YYYY-M')
+    let daysInMonth = moment(nextYearMonth).daysInMonth();
+    let nextMonthArr = [];
+    while(daysInMonth) {
+      let current = moment(nextYearMonth).date(daysInMonth);
+      nextMonthArr.push({
+        day: current.format("D"),
+        week: current.format("ddd").toUpperCase()
+      });
+      daysInMonth--;
+    }
+    setNextMonth(handleNextMonthDays(nextMonthArr, moment().endOf('month').format('E')))
   }
 
   useEffect(() => {
     getDaysArrayByMonth(moment(currentDate).format('YYYY-M'))
   },[])
 
+  useEffect(() => {
+    getDaysArrayOfPreviousMonth(moment(currentDate).format('YYYY-M'))
+  },[])
+
+  useEffect(() => {
+    getDaysArrayOfNextMonth(moment(currentDate).format('YYYY-M'))
+  },[])
+
   return (
     <>
-      <Container fluid className="d-flex p-2">
-        <div className="first-row">SUN <br/> 31</div>
-        <div className="first-row">MON <br/> Nov 1</div>
-        <div className="first-row">TUE <br/> 2</div>
-        <div className="first-row">WED <br/> 3</div>
-        <div className="first-row">THU <br/> 4</div>
-        <div className="first-row">FRI <br/> 5</div>
-        <div className="first-row">SAT <br/> 6</div>
+    <Container fluid className="d-flex p-2 flex-wrap">
+      {((previousMonth && nextMonth) ? [...previousMonth, ...monthDays, ...nextMonth] : []).slice(0,7).map((month, index) => {
+        return (
+          <div key={index} className="first-row">{month.week} <br/> {month.day}</div>
+        )
+      })}
+    </Container>
+      <Container fluid className="d-flex p-2 flex-wrap">
+        {((previousMonth && nextMonth) ? [...previousMonth, ...monthDays, ...nextMonth] : []).slice(7,(previousMonth ? [...previousMonth, ...monthDays, ...nextMonth].length : 0)).map((month, index) => {
+          return (
+            <div key={index} className="first-row">{month.day}</div>
+          )
+        })}
       </Container>
-      <Container fluid className="d-flex p-2">
-        <div className="other-row">7</div>
-        <div className="other-row">8</div>
-        <div className="other-row">9</div>
-        <div className="other-row">10</div>
-        <div className="other-row">11</div>
-        <div className="other-row">12</div>
-        <div className="other-row"> 13</div>
-      </Container>
-      <Container fluid className="d-flex p-2">
-        <div className="other-row">14</div>
-        <div className="other-row">15</div>
-        <div className="other-row">16</div>
-        <div className="other-row">17</div>
-        <div className="other-row">18</div>
-        <div className="other-row">19</div>
-        <div className="other-row">20</div>
-      </Container>
-      <Container fluid className="d-flex p-2">
-        <div className="other-row">21</div>
-        <div className="other-row">21</div>
-        <div className="other-row">23</div>
-        <div className="other-row">24</div>
-        <div className="other-row">25</div>
-        <div className="other-row">26</div>
-        <div className="other-row">27</div>
-      </Container>
-      <Container fluid className="d-flex p-2">
-        <div className="other-row">28</div>
-        <div className="other-row">29</div>
-        <div className="other-row">30</div>
-        <div className="other-row">Dec 1</div>
-        <div className="other-row">2</div>
-        <div className="other-row">3</div>
-        <div className="other-row">4</div>
-      </Container>
-
     </>
   )
 }
