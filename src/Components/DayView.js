@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
+import moment from 'moment';
 import "./DayView.css";
 
-export const DayView = () => {
-
+export const DayView = ({currentDate}) => {
+  const [ day, setDay ] = useState(null);
+  const [ date, setDate ] = useState(null);
+  useEffect(() => {
+    setDay(moment(currentDate).format('ddd'))
+    setDate(moment(currentDate).format('D'))
+  },[])
   return (
     <>
       <Container className="d-flex" fluid >
         <div className="flexrow p-2">
           <label className="rowone">GMT+05:30</label>
         </div>
-        <div className="row-one-info p-2 flex-grow-1">Mon <br/> 7</div>
+        <div className="row-one-info p-2 flex-grow-1">{day} <br/> {date}</div>
       </Container>
       <Container className="d-flex" fluid >
         <div className="flexrow p-2">

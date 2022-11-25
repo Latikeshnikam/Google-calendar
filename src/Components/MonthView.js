@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
+import moment from 'moment';
 import "./MonthView.css"
 
-const MonthView = () => {
+const MonthView = ({currentDate}) => {
+
+  const [monthDays, setMonthDays] = useState(null);
+
+  const getDaysArrayByMonth = (YearMonth) => {
+    let daysInMonth = moment(YearMonth).daysInMonth();
+    let month = moment(YearMonth).format('MMMM')
+    let arrDays = []
+
+    while(daysInMonth) {
+      let current = moment(YearMonth).date(daysInMonth);
+      arrDays.push({
+        day: current.format("D"),
+        week: current.format("ddd")
+      });
+      daysInMonth--;
+    }
+    setMonthDays(arrDays)
+  }
+
+  useEffect(() => {
+    getDaysArrayByMonth(moment(currentDate).format('YYYY-M'))
+  },[])
+
   return (
     <>
       <Container fluid className="d-flex p-2">

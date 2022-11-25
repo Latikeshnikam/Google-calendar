@@ -117,6 +117,7 @@ const Header = () => {
     <Container fluid>
       <MainMenu
         calendarView={calendarView}
+        currentDate={new Date()}
       />
     </Container>
     </>

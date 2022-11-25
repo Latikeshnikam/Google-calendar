@@ -1,21 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
+import { WeeksAbbr } from './constants';
 import "./WeekView.css";
+import moment from "moment";
 
-const WeekView  = () => {
+const WeekView  = ({currentDate}) => {
+  const [weekDays, setWeekDays] = useState(null)
+
+  useEffect(() => {
+    var currentDate = moment();
+    var weekStart = currentDate.clone().startOf('week');
+    var weekEnd = currentDate.clone().endOf('week');
+
+    var days = [];
+    for (let i = 0; i <= 6; i++) {
+      days.push({
+        weekday: moment(weekStart).add(i, 'days').format("ddd"),
+        date: moment(weekStart).add(i, 'days').format("D")
+      })
+    };
+    setWeekDays(days)
+  },[])
+
   return (
     <>
     <Container fluid className="d-flex">
       <div className="flexrow p-2">
         <label className="rowone">GMT+05:30</label>
       </div>
-      <div className="row-one-info p-2 flex-grow-1">SUN <br/> 6</div>
-      <div className="row-one-info p-2 flex-grow-1">MON <br/> 7</div>
-      <div className="row-one-info p-2 flex-grow-1">TUE <br/> 8</div>
-      <div className="row-one-info p-2 flex-grow-1">WED <br/> 9</div>
-      <div className="row-one-info p-2 flex-grow-1">THU <br/> 10</div>
-      <div className="row-one-info p-2 flex-grow-1">FRI <br/> 11</div>
-      <div className="row-one-info p-2 flex-grow-1">SAT <br/> 12</div>
+      {weekDays?.map((week) => (
+        <div className="row-one-info p-2 flex-grow-1">{week.weekday.toUpperCase()} <br/> {week.date}</div>
+      ))}
     </Container>
     <Container className="d-flex" fluid >
       <div className="flexrow p-2">

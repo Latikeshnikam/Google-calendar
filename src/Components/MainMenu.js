@@ -10,7 +10,7 @@ import TaskModal from './TaskModal';
 import AppointmentSlots from './AppointmentSlotsModal';
 import CalendarView from "./CalendarView";
 
-const MainMenu = ({ calendarView }) => {
+const MainMenu = ({ calendarView, currentDate }) => {
 
   const [showEventModal, setEventModal ] = useState(false)
   const [showOutOffcModal, setOutOffcModal ] = useState(false)
@@ -51,13 +51,15 @@ const MainMenu = ({ calendarView }) => {
         <AppointmentSlots handleClose={handleCloseAppointmentModal} show={showAppointmentModal} />
       )}
       {calendarView === 'Week' && (
-        <WeekView />
+        <WeekView
+          currentDate={new Date()}
+        />
       )}
       {calendarView === 'Day' && (
-        <DayView />
+        <DayView currentDate={new Date()} />
       )}
       {calendarView === 'Month' && (
-        <MonthView />
+        <MonthView currentDate={new Date()} />
       )}
       {calendarView === '4 days' && (
         <FourDayView />
