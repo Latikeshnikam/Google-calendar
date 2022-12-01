@@ -32,7 +32,7 @@ const MainMenu = ({ calendarView, currentDate, prevClick, nextClick }) => {
 
   return (
     <>
-      <DropdownButton id="dropdown-basic-button" title="Create" style={filterButton} variant="light">
+      <DropdownButton id="dropdown-basic-button" title="Create" style={filterButton} variant="light" style={{marginTop: '-20px', marginBottom: '-40px'}}>
         <Dropdown.Item as="button" onClick={() => handleShowEventModal()}>Event</Dropdown.Item>
         <Dropdown.Item as="button" onClick={() => handleShowOutOffcModal()}>Out Of Office</Dropdown.Item>
         <Dropdown.Item as="button" onClick={() => handleShowTaskModal()}>Task</Dropdown.Item>
@@ -58,13 +58,25 @@ const MainMenu = ({ calendarView, currentDate, prevClick, nextClick }) => {
         />
       )}
       {calendarView === 'Day' && (
-        <DayView currentDate={new Date()} />
+        <DayView
+          currentDate={currentDate}
+          prevClick={prevClick}
+          nextClick={nextClick}
+        />
       )}
       {calendarView === 'Month' && (
-        <MonthView currentDate={new Date()} />
+        <MonthView
+          currentDate={currentDate}
+          prevClick={prevClick}
+          nextClick={nextClick}
+        />
       )}
       {calendarView === '4 days' && (
-        <FourDayView />
+        <FourDayView
+          currentDate={currentDate}
+          prevClick={prevClick}
+          nextClick={nextClick}
+        />
       )}
       {calendarView === 'Year' && (
         <CalendarView />

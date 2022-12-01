@@ -50,7 +50,6 @@ const filters = (handleRecord, calendarView) => {
         <Dropdown.Item as="button" onClick={() => handleRecord('Week')}>Week</Dropdown.Item>
         <Dropdown.Item as="button" onClick={() => handleRecord('Month')}>Month</Dropdown.Item>
         <Dropdown.Item as="button" onClick={() => handleRecord('Year')}>Year</Dropdown.Item>
-        <Dropdown.Item as="button">Schedule</Dropdown.Item>
         <Dropdown.Item as="button" onClick={() => handleRecord('4 days')}>4 days</Dropdown.Item>
     </DropdownButton>
     </>
@@ -84,6 +83,18 @@ const Header = () => {
     return new Date()
   }
 
+  const setCalendarDateFormat = () => {
+    if(calendarView === 'Month'){
+      return 'MMMM d'
+    } else if(calendarView === 'Day'){
+      return 'MMMM d, yyyy'
+    } else if(calendarView === 'Year'){
+      return 'yyyy'
+    } else {
+      return 'MMMM d, yyyy'
+    }
+  }
+
   useEffect(() => {
     getPreviousDate()
   },[prevClick])
@@ -92,9 +103,13 @@ const Header = () => {
     getNextDate()
   },[nextClick])
 
+  useEffect(() => {
+    setCalendarDateFormat()
+  },[calendarView])
+
   return (
     <>
-    <Container fluid>
+    <Container fluid style={{ marginTop: '-20px'}}>
       <Navbar expand="lg" variant="light" bg="light">
           <img src={require('./calendar.png')} alt="calendar-icon" width="100px"/>
           <Navbar.Brand href="#">Calendar</Navbar.Brand>
@@ -112,7 +127,7 @@ const Header = () => {
                 setStartDate(date)
               }}
               placeholderText={startDate}
-              dateFormat="MMMM d, yyyy"
+              dateFormat={setCalendarDateFormat()}
             />
           </Nav>
           <Nav className="justify-content-end">

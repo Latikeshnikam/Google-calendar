@@ -6,6 +6,7 @@ import moment from "moment";
 
 const WeekView  = ({currentDate, prevClick, nextClick}) => {
   const [weekDays, setWeekDays] = useState(null)
+  let todayDate = new Date()
 
   useEffect(() => {
     let current = moment(currentDate);
@@ -28,9 +29,18 @@ const WeekView  = ({currentDate, prevClick, nextClick}) => {
       <div className="flexrow p-2">
         <label className="rowone">GMT+05:30</label>
       </div>
-      {weekDays?.map((week, index) => (
-        <div key={index} className="row-one-info p-2 flex-grow-1">{week.weekday.toUpperCase()} <br/> {week.date}</div>
-      ))}
+      {weekDays?.map((week, index) => {
+          if(moment(todayDate).format('ddd, D') === `${week.weekday}, ${week.date}`){
+            return(
+              <div key={index} className="row-one-info p-2 flex-grow-1"><span className="active-weekday">{week.weekday.toUpperCase()}</span> <br/> <span className="active-week-date">{week.date}</span></div>
+            )
+          } else {
+            return(
+              <div key={index} className="row-one-info p-2 flex-grow-1"><span className="weekday">{week.weekday.toUpperCase()}</span> <br/> <span className="week-date">{week.date}</span></div>
+            )
+          }
+        }
+      )}
     </Container>
     <Container className="d-flex" fluid >
       <div className="flexrow p-2">

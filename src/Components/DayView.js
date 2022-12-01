@@ -3,13 +3,14 @@ import { Container } from "react-bootstrap";
 import moment from 'moment';
 import "./DayView.css";
 
-export const DayView = ({currentDate}) => {
+export const DayView = ({currentDate, prevClick, nextClick}) => {
   const [ day, setDay ] = useState(null);
   const [ date, setDate ] = useState(null);
   useEffect(() => {
     setDay(moment(currentDate).format('ddd'))
     setDate(moment(currentDate).format('D'))
-  },[])
+  },[currentDate, prevClick, nextClick])
+  
   return (
     <>
       <Container className="d-flex" fluid >

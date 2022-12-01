@@ -1,18 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import "./WeekView.css";
+import moment from "moment"
 
-const FourDayView  = () => {
+const FourDayView  = ({
+  currentDate,
+  prevClick,
+  nextClick
+}) => {
+  const [fourDays, setFourDays] = useState([])
+  let todayDate = new Date()
+
+  useEffect(() => {
+    let current = moment(currentDate)
+    let fourDaysArr = [];
+    for(let i=0; i<4; i++){
+      fourDaysArr.push({
+        weekday: moment(current).add(i, 'days').format("ddd"),
+        date: moment(current).add(i, 'days').format("D")
+      })
+    }
+    setFourDays(fourDaysArr)
+  },[currentDate, prevClick, nextClick])
+
   return (
     <>
     <Container fluid className="d-flex">
       <div className="flexrow p-2">
         <label className="rowone">GMT+05:30</label>
       </div>
-      <div className="row-one-info p-2 flex-grow-1">SUN <br/> 6</div>
-      <div className="row-one-info p-2 flex-grow-1">MON <br/> 7</div>
-      <div className="row-one-info p-2 flex-grow-1">TUE <br/> 8</div>
-      <div className="row-one-info p-2 flex-grow-1">WED <br/> 9</div>
+      {fourDays?.map((week, index) => {
+        if(moment(todayDate).format('ddd, D') === `${week.weekday}, ${week.date}`){
+          return(
+            <div key={index} className="row-one-info p-2 flex-grow-1"><span className="active-weekday">{week.weekday.toUpperCase()}</span> <br/> <span className="active-week-date">{week.date}</span></div>
+          )
+        } else {
+          return(
+            <div key={index} className="row-one-info p-2 flex-grow-1"><span className="weekday">{week.weekday.toUpperCase()}</span> <br/> <span className="week-date">{week.date}</span></div>
+          )
+        }
+      }
+      )}
     </Container>
     <Container className="d-flex" fluid >
       <div className="flexrow p-2">
