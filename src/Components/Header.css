@@ -1,0 +1,12 @@
+.react-datepicker-wrapper {
+  margin-top: 4px;
+  font-size: 25px;
+}
+
+input {
+  border: none;
+}
+
+.react-datepicker-ignore-onclickoutside {
+  border: none;
+}

@@ -1,0 +1,23 @@
+.timer-content {
+  padding-left: 15px;
+}
+
+.timer-subcontent {
+  font-size: 12px;
+  display: inline-block;
+}
+
+.message-title {
+  font-size: 13px;
+  display: inline-block;
+}
+
+.question-icon {
+  margin-top: 4px;
+  margin-left: 2px;
+}
+
+.status-title {
+  margin-top: 12px;
+  margin-left: 10px;
+}

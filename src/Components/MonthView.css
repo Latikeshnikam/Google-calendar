@@ -1,0 +1,36 @@
+
+.first-row {
+  /* border: 1px solid #EBEDEF; */
+  border: 1px solid #EBEDEF;;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #808B96;
+  font-weight: 500;
+  height: 7rem;
+  width: calc(100% * (1/7) - 10px - 1px);
+  padding-top: 30px;
+  margin-bottom: -15px;
+}
+
+.other-row {
+  border: 1px solid #EBEDEF;;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #808B96;
+  font-weight: 500;
+  height: 6rem;
+  margin-top: -17px;
+  width: 40px;
+  padding-top: 30px;
+}
+
+.active-month-date {
+  color: white;
+  background-color: #007FDD;
+  padding: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 50%;
+}
