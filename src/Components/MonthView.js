@@ -3,11 +3,12 @@ import { Container } from "react-bootstrap";
 import moment from 'moment';
 import "./MonthView.css"
 
-const MonthView = ({currentDate}) => {
+const MonthView = ({currentDate, prevClick, nextClick}) => {
 
   const [monthDays, setMonthDays] = useState(null);
   const [previousMonth, setPreviousMonth] = useState(null);
   const [nextMonth, setNextMonth] = useState(null);
+  let todayDate = new Date()
 
   const getDaysArrayByMonth = (YearMonth) => {
     let daysInMonth = moment(YearMonth).daysInMonth();
@@ -18,7 +19,7 @@ const MonthView = ({currentDate}) => {
       let current = moment(YearMonth).date(daysInMonth);
       arrDays.push({
         day: current.format("D"),
-        week: current.format("ddd").toUpperCase()
+        week: current.format("ddd")
       });
       daysInMonth--;
     }
@@ -42,7 +43,7 @@ const MonthView = ({currentDate}) => {
       let current = moment(previousYearMonth).date(daysInMonth);
       previousArr.push({
         day: current.format("D"),
-        week: current.format("ddd").toUpperCase()
+        week: current.format("ddd")
       });
       daysInMonth--;
     }
@@ -57,7 +58,7 @@ const MonthView = ({currentDate}) => {
       let current = moment(nextYearMonth).date(daysInMonth);
       nextMonthArr.push({
         day: current.format("D"),
-        week: current.format("ddd").toUpperCase()
+        week: current.format("ddd")
       });
       daysInMonth--;
     }
@@ -66,7 +67,7 @@ const MonthView = ({currentDate}) => {
 
   useEffect(() => {
     getDaysArrayByMonth(moment(currentDate).format('YYYY-M'))
-  },[])
+  },[currentDate, nextClick, prevClick])
 
   useEffect(() => {
     getDaysArrayOfPreviousMonth(moment(currentDate).format('YYYY-M'))
@@ -80,16 +81,28 @@ const MonthView = ({currentDate}) => {
     <>
     <Container fluid className="d-flex p-2 flex-wrap">
       {((previousMonth && nextMonth) ? [...previousMonth, ...monthDays, ...nextMonth] : []).slice(0,7).map((month, index) => {
-        return (
-          <div key={index} className="first-row">{month.week} <br/> {month.day}</div>
-        )
+        if(moment(todayDate).format('ddd, D') === `${month.week}, ${month.day}`){
+          return(
+            <div key={index} className="first-row">{month.week.toUpperCase()}<br/> <span className="active-month-date">{month.day}</span></div>
+          )
+        } else {
+          return(
+            <div key={index} className="first-row">{month.week.toUpperCase()} <br/>{month.day}</div>
+          )
+        }
       })}
     </Container>
       <Container fluid className="d-flex p-2 flex-wrap">
         {((previousMonth && nextMonth) ? [...previousMonth, ...monthDays, ...nextMonth] : []).slice(7,(previousMonth ? [...previousMonth, ...monthDays, ...nextMonth].length : 0)).map((month, index) => {
-          return (
-            <div key={index} className="first-row">{month.day}</div>
-          )
+          if(moment(todayDate).format('ddd, D') === `${month.week}, ${month.day}`){
+            return(
+              <div key={index} className="first-row"><span className="active-month-date">{month.day}</span></div>
+            )
+          } else {
+            return(
+              <div key={index} className="first-row">{month.day}</div>
+            )
+          }
         })}
       </Container>
     </>

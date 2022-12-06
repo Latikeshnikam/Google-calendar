@@ -25,3 +25,12 @@
   width: 40px;
   padding-top: 30px;
 }
+
+.active-month-date {
+  color: white;
+  background-color: #007FDD;
+  padding: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 50%;
+}

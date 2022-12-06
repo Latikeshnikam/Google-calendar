@@ -10,14 +10,14 @@ export const DayView = ({currentDate, prevClick, nextClick}) => {
     setDay(moment(currentDate).format('ddd'))
     setDate(moment(currentDate).format('D'))
   },[currentDate, prevClick, nextClick])
-  
+
   return (
     <>
       <Container className="d-flex" fluid >
         <div className="flexrow p-2">
           <label className="rowone">GMT+05:30</label>
         </div>
-        <div className="row-one-info p-2 flex-grow-1">{day} <br/> {date}</div>
+        <div className="row-day-info p-2 flex-grow-1"><span className="active-day-weekday">{day}</span> <br/> <span className="active-week-date">{date}</span></div>
       </Container>
       <Container className="d-flex" fluid >
         <div className="flexrow p-2">
